@@ -4,6 +4,10 @@ from unittest.mock import patch, MagicMock
 import re
 
 import requests
+import requests_cache
+
+#Cache requests, need to lower this in prod
+requests_cache.install_cache(expire_after=3600)
 
 try:
     import config
@@ -14,8 +18,10 @@ except:
 
 def get_zd_url(url, content_type='json'):
     response = requests.get(url, auth=(config.zendesk_user, config.zendesk_pwd))
-    data = response.json()
-    return data
+    if content_type == 'json':
+        return response.json()
+    else:
+        return response.text
 
 
 def extract_ws(content):
@@ -39,6 +45,23 @@ def get_jira_ticket_list(zd_ticket_id):
     return response.json()
 
 
+def get_ticket(zd_ticket_url):
+    base = get_zd_url(zd_ticket_url)['ticket']
+    jira_tickets = get_jira_ticket_list(base['id'])
+    base['jira'] = [get_jira_ticket(x["issue_id"]) for x in jira_tickets['links']]
+    return base
+
+
+def get_zd_ticket_by_id(ticket_id):
+    return get_ticket('https://energyplus.zendesk.com/api/v2/tickets/%s.json' % ticket_id)
+
+
+def get_jira_ticket(jira_id):
+    url = config.jira_url % jira_id
+    response = requests.get(url, auth=(config.jira_user, config.jira_pwd))
+    return response.json()
+
+
 installed_js_fragment = '''\
 ZendeskApps["JIRA OnDemand"].install({"id":12345,"app_id":12345,"settings":{"title":"JIRA","jira_url":"https://yourdomain.atlassian.net","webservice_token":"92348923482194fefefefefef123103901","jira_username":"jusername","jira_password":"jpassword","jira_field_settings":null,"has_jira_shared_secret":"9"},"enabled":true,"updated":"20140822044814"});
   ZendeskApps.sortAppsForSite('ticket_sidebar', [1234, 123456]);''
@@ -46,4 +69,6 @@ ZendeskApps["JIRA OnDemand"].install({"id":12345,"app_id":12345,"settings":{"tit
 expected_ws_token = '92348923482194fefefefefef123103901'
 
 if __name__ == "__main__":
-    unittest.main()
+    #unittest.main()
+    zd_ticket = '7368'
+    print (get_zd_ticket_by_id(zd_ticket))

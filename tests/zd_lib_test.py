@@ -22,12 +22,12 @@ class myTestCase(unittest.TestCase):
 
     def test_load_ws_token(self):
         mock = MagicMock()
-        mock.json.return_value = installed_js_fragment
+        mock.text = installed_js_fragment
         with patch.object(requests, 'get', return_value=mock) as mock_requests:
             self.assertEqual(get_ws_token(), expected_ws_token)
 
     @patch('zd_lib.extract_ws')
-    def test_get_jira_list(self, mock1):
+    def tes_get_jira_list(self, mock1):
         mock_response = MagicMock()
         mock_response.json.return_value = "{'test': 'true'}"
         mock1.return_value = '999111'
