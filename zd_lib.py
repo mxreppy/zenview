@@ -8,7 +8,7 @@ import requests
 try:
     import config
 except:
-    print("could not import config.py, please create it")
+    print("could not import config.py, please create it (see ./config_example.py for an example)")
     exit(1)
 
 
