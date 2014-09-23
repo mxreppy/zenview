@@ -4,3 +4,4 @@ config.py
 *.pyc
 .ropeproject
 cache.sqlite
+.idea
