@@ -2,6 +2,7 @@ import os
 from flask import Flask, jsonify
 
 from zd_lib import get_zd_url, get_zd_ticket_by_id
+import config
 
 application = Flask(__name__, static_folder="dist")
 application.debug = True
@@ -9,7 +10,7 @@ application.debug = True
 
 @application.route("/api/zendesk/ticket/")
 def get_zd_tickets():
-    return jsonify(get_zd_url())
+    return jsonify(get_zd_url(config.zd_view_url))
 
 
 @application.route("/api/zendesk/ticket/<ticket_id>")
