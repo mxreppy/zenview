@@ -8,4 +8,4 @@ var HomeCtrl = require('./controllers/home.js');
 
 var app = angular.module('myApp', []);
 
-app.controller('HomeCtrl',['$scope', HomeCtrl]);
+app.controller('HomeCtrl',['$scope', '$http', HomeCtrl]);

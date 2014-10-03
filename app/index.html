@@ -2,13 +2,20 @@
 <html lang="en" ng-app="myApp">
 <head>
   <title>Zendesk</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 </head>
 <body ng-controller='HomeCtrl'>
-  <h1>Zendesk viewer edited </h1>
-  <p>{{testVar}}</p>
-  <div ng-view></div>
+  <h1>Zendesk <3 Jira </h1>
+  <div ng-view>
+     <div>id: {{ ticket.id }}</div>
+     <div ng-repeat="jira in ticket.jira">
+         <div>Status: {{ jira.fields.status.name }}</div>
+         <div>Assignee: {{ jira.fields.assignee.displayName }}</div>
+         <a href="http://energyplus.atlassian.net/browse/{{ jira.key }}">{{ jira.key }}</a>
+     </div>
+  </div>
   <script src="/js/bundle.js"></script>
-<script>document.write('<script src="http://'
+  <script>document.write('<script src="http://'
     + (location.host || 'localhost').split(':')[0]
     + ':35729/livereload.js?snipver=1"></'
     + 'script>')</script>
