@@ -1,3 +1,4 @@
+import json
 import unittest
 
 import re
@@ -70,4 +71,4 @@ expected_ws_token = '92348923482194fefefefefef123103901'
 if __name__ == "__main__":
     #unittest.main()
     zd_ticket = '7368'
-    print (get_zd_ticket_by_id(zd_ticket))
+    print(json.dumps(get_zd_ticket_by_id(zd_ticket)))
