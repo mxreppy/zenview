@@ -7,11 +7,15 @@
 <body ng-controller='HomeCtrl'>
   <h1>Zendesk <3 Jira </h1>
   <div ng-view>
-     <div>id: {{ ticket.id }}</div>
      <div ng-repeat="jira in ticket.jira">
-         <div>Status: {{ jira.fields.status.name }}</div>
-         <div>Assignee: {{ jira.fields.assignee.displayName }}</div>
-         <a href="http://energyplus.atlassian.net/browse/{{ jira.key }}">{{ jira.key }}</a>
+         <div class="row">
+             <div class="col-sm-2">id: {{ ticket.id }}</div>
+             <div class="col-sm-2">{{ jira.fields.status.name }}</div>
+             <div class="col-sm-2">Assignee: {{ jira.fields.assignee.displayName }}</div>
+             <div class=""col-sm-2>
+                 <a href="http://energyplus.atlassian.net/browse/{{ jira.key }}">{{ jira.key }}</a>
+             </div>
+         </div>
      </div>
   </div>
   <script src="/js/bundle.js"></script>
