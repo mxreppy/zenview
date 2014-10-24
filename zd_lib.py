@@ -1,3 +1,4 @@
+import functools
 import json
 import unittest
 
@@ -22,6 +23,20 @@ def get_zd_url(url, content_type='json'):
         return response.json()
     else:
         return response.text
+
+
+functools.lru_cache()
+def get_zd_username(user_id):
+    user = get_zd_url(config.zd_user_url.format(user_id)).get('user', {})
+    return user.get('name', 'Unknown')
+
+
+def get_zd_ticket_list():
+    tickets = get_zd_url(config.zd_view_url)
+    for ticket in tickets['tickets']:
+        ticket['assignee'] = get_zd_username(ticket['assignee_id'])
+        ticket['requester'] = get_zd_username(ticket['requester_id'])
+    return tickets
 
 
 def extract_ws(content):
