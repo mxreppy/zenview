@@ -1,13 +1,18 @@
 'use strict';
 
-var HomeCtrl = function($scope, $http) {
+var HomeCtrl = function($scope, $http, $location, $routeParams) {
 
   $http.get('/api/zendesk/ticket/').success(function(data) {
-    $http.get('/api/zendesk/ticket/' + data.tickets[0].id)
-      .success(function(data) {
-        $scope.ticket = data;
-      });
+    $scope.tickets = data.tickets;
   });
+
+  // todo: move to ticket detail ctrl
+  $scope.ticketId = $routeParams.ticketId;
+
+  $scope.ticketDetails = function(ticketId) {
+    console.log(ticketId);
+    $location.path('ticket-detail/'+ticketId); // path not hash
+  }
 };
 
 module.exports = HomeCtrl;

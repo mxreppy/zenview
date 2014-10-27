@@ -5,19 +5,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 </head>
 <body ng-controller='HomeCtrl'>
-  <h1>Zendesk <3 Jira </h1>
-  <div ng-view>
-     <div ng-repeat="jira in ticket.jira">
-         <div class="row">
-             <div class="col-sm-2">id: {{ ticket.id }}</div>
-             <div class="col-sm-2">{{ jira.fields.status.name }}</div>
-             <div class="col-sm-2">Assignee: {{ jira.fields.assignee.displayName }}</div>
-             <div class=""col-sm-2>
-                 <a href="http://energyplus.atlassian.net/browse/{{ jira.key }}">{{ jira.key }}</a>
-             </div>
-         </div>
-     </div>
-  </div>
+  <div ng-view></div>
   <script src="/js/bundle.js"></script>
   <script>
     if (location.host.indexOf('5000') != -1) {
